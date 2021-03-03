@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-produto
+spec:
+  selector:
+    matchLabels:
+      app: api-produto
+  template:
+    metadata:
+      labels:
+        app: api-produto
+    spec:
+      containers:
+        - name: api-produto
+          image: moroleandro/api-produto:v1.0.0
+          ports:
+          - containerPort: 80
+          env: 
+          - name: MONGODB_URI
+            value: mongodb://mongouser:apiproduto@mongodb-service:27017/admin
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-produto-service
+spec:
+  selector:
+    app: api-produto
+  ports:
+  - port: 80
+    targetPort: 8080
+    nodePort: 30000
+  type: NodePort
