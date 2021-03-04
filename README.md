@@ -29,7 +29,7 @@ $ docker build -t [repository-docker-hub]/api-produto:v1.0.0
 $ docker push [repository-docker-hub]/api-produto:v1.0.0
 
 # Create cluster using k3d
-$ k3d cluster create mycluster --servers 1 --agents 2 -p "8080:30000@loadbalancer"
+$ k3d cluster create --servers 1 --agents 2 -p "8080:30000@loadbalancer" -p "8181:30001@loadbalancer" -p "8282:30002@loadbalancer"
 
 # Apply manifests kubernetes
 $ kubectl apply -f ./kubernetes/
@@ -38,6 +38,29 @@ $ kubectl apply -f ./kubernetes/
 http://localhost:8080/api-docs/
 
 
+##################
+### MONITORING ###
+###################
+
+# Add repo helm prometheus
+$ helm3 repo add prometheus-community https://prometheus-community.github.io/helm-charts
+$ helm3 repo update
+
+# Install prometheus on cluster
+$ helm3 install prometheus prometheus-community/prometheus --values ./prometheus/values.yaml
+
+# Dashboard grafana 
+$ localhost:8181
+
+# Add repo helm grafana
+$ helm3 repo add grafana https://grafana.github.io/helm-charts
+$ helm3 repo update
+
+# Install grafana on cluster
+$ helm3 install grafana grafana/grafana --values ./grafana/values.yaml
+
+# Dashboard grafana 
+$ localhost:8282
 
 
 
