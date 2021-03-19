@@ -4,7 +4,7 @@
   <img width="300" alt="k3s" src="https://k3d.io/static/img/k3d_logo_black_blue.svg" />
 </a><br><br>
   <h2 align="center">
-     Local stack using K3S
+     Local stack using K3D
   </h2>
 </div>
 
